@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Songs - API's Rafel</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .song--name {
+            font-size: large;
+        }
+
+        table {
+            font-size: 0.9rem;
+        }
+
+        .expression-table {
+            width: 70%;
+        }
+        .h2--badges{
+            font-size: 1rem;
+            font-weight: 100;
+        }
+        .span--badges,
+        .h2--badges{
+            opacity: 0.7;
+        }
+        ul.album--list--of--the--version li {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        /* Icona de tancar i obrir */
+/*         .fa{
+            color: #0275d8;
+            margin-left: 15px;
+        }
+        li .fa {
+            transition: .3s transform ease-in-out;
+        }
+        li .collapsed .fa {
+            transform: rotate(90deg);
+        }
+
+        li a[data-toggle="collapse"]:hover, 
+        li a[data-toggle="collapse"]:active, 
+        li a[data-toggle="collapse"]:focus  {
+            text-decoration:none;
+        } */
+ 		.button-plus-minus{
+            position: relative;
+            width: 15px;
+            height: 15px;
+            margin-right: 15px;
+            display: inline-block;
+        }
+        .button-plus-minus:before, 
+        .button-plus-minus:after {
+            content: "";
+            position: absolute;
+            background-color: #5bc0de;
+            transition: transform 0.25s ease-out;
+        }
+        .button-plus-minus:before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            margin-top: -2px;
+        }
+        .button-plus-minus:after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            margin-top: -2px;
+        }
+
+        .button-plus-minus:hover {
+            cursor: pointer;
+        }
+        .collapsed .button-plus-minus:before {
+            transform: rotate(-90deg);
+        }
+        .collapsed .button-plus-minus:after {
+            transform: rotate(-180deg); 
+        }
+        
+    </style>
+<!--    <script src="https://kit.fontawesome.com/8451d591e0.js" crossorigin="anonymous"></script>  -->
+</head>
+
+<body>
+    <div class="container">
+        <!-- header -->
+        <!-- header -->
+        <!-- header -->
+        <div class="row">
+            <div class="col">
+                <h1>Library <small class="text-muted">API's Rafel</small></h1>
+            </div>
+        </div>
+        <!-- search -->
+        <!-- search -->
+        <!-- search -->
+        <div class="row mb-2">
+            <div class="col">
+              <!--   <form>  -->
+                    <div class="form-group">
+                        <label for="string">Search song</label>
+                        <input type="text" class="form-control" id="string">
+                        <small id="emailHelp" class="form-text text-muted">Type the text to search and then press the enter key</small>
+                    </div>
+             <!--    </form>  -->
+            </div>
+        </div>
+        <!-- songs -->
+        <!-- songs -->
+        <!-- songs -->
+        <div class="row">
+            <div class="col">
+                <div id="song-search-results" class="mb-2">     
+                    <ul class="list-group">
+                    <!--    <li class="list-group-item list-group-item-action">
+                            <a href="#" class="song--name mr-2"">"name of song one"</a>
+                            <span class="badge badge-pill badge-info mx-2">N</span>versions and appears on
+                            <span class="badge badge-pill badge-info mx-2">N</span>albums
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <a href="#" class="mr-2" data-toggle="modal" data-target="#error--enllac-no-diposible">"name of song two"</a> 
+                            <span class="badge badge-pill badge-info mx-2">N</span>versions and appears on
+                            <span class="badge badge-pill badge-info mx-2">N</span>albums
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <a href="#" class="mr-2" data-toggle="modal" data-target="#error--enllac-no-diposible">"name of song three"</a>
+                            <span class="badge badge-pill badge-info mx-2">N</span>versions and appears on
+                            <span class="badge badge-pill badge-info mx-2">N</span>albums
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- https://getbootstrap.com/docs/4.4/components/collapse/#accordion-example -->
+
+
+
+
+
+       <div id="albums-and-versions-results" class="collapse">
+    <!--         css .collapse hides content
+            <div class="row my-3">
+                <div class="col">
+                    <h2><small class="text-muted">Albums and versions from: </small>"name of son one" song</h2>
+                </div>
+            </div>
+            version list
+            version list
+            version list
+            <div class="row">
+                <div class="col offset-md-1">
+                    <h2><span class="badge badge-pill badge-info mr-2">N</span>Versions</h2>
+                    <div class="accordion" id="versions">
+                        version-1
+                        version-1
+                        version-1
+                        <div class="card version--1--song--1">
+                            <div class="card-header" id="heading-version-1-song-1">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#version-1-song-1">
+                                        "Version 1 of song 1"
+                                    </button>
+                                    <span class="h2--badges">appears on <span class="badge badge-pill badge-info mx-2">N</span>albums</span>
+                                </h2>
+                            </div>
+                            <div id="version-1-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="album--list--of--the--version">
+                                        <li>
+                                            <a href="#version--1--table--album--z" data-toggle="collapse" class="collapsed">Name album z<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--1--table--album--z" class="collapse collapsed">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#version--1--table--album--x" data-toggle="collapse" class="collapsed">Name album x<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--1--table--album--x" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                        <li>
+                                            <a href="#version--1--table--album--y" data-toggle="collapse" class="collapsed">Name album y<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--1--table--album--y" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        version-2
+                        version-2
+                        version-2
+                        <div class="card version--2--song--1">
+                            <div class="card-header" id="heading-version-2-song-1">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#version-2-song-1">
+                                        "Version 2 of song 1" 
+                                    </button>
+                                    <span class="h2--badges">appears on <span class="badge badge-pill badge-info mx-2">N</span>albums</span>
+                                </h2>
+                            </div>
+                            <div id="version-2-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="album--list--of--the--version">
+                                        <li>
+                                            <a href="#version--2--table--album--z" data-toggle="collapse" class="collapsed">Name album z<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--2--table--album--z" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#version--2--table--album--x" data-toggle="collapse" class="collapsed">Name album x<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--2--table--album--x" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                        <li>
+                                            <a href="#version--2--table--album--y" data-toggle="collapse" class="collapsed">Name album y<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--2--table--album--y" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        version-3
+                        version-3
+                        version-3
+                        <div class="card version--3--song--1">
+                            <div class="card-header" id="heading-version-1-song-1">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#version-3-song-1">
+                                        "Version 3 of song 1"
+                                    </button>
+                                    <span class="h2--badges">appears on <span class="badge badge-pill badge-info mx-2">N</span>albums</span>
+                                </h2>
+                            </div>
+                            <div id="version-3-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="album--list--of--the--version">
+                                        <li>
+                                            <a href="#version--3--table--album--z" data-toggle="collapse" class="collapsed">Name album z<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--3--table--album--z" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#version--3--table--album--x" data-toggle="collapse" class="collapsed">Name album x<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--3--table--album--x" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                        <li>
+                                            <a href="#version--3--table--album--y" data-toggle="collapse" class="collapsed">Name album y<i class="fa fa-chevron-down pull-right"></i></a>
+                                            <div id="version--3--table--album--y" class="collapse">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Name field 1 of the album</td>
+                                                            <td>value of field 1 of the album</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 2 of the album</td>
+                                                            <td>value of field 2 of the versalbumion</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Name field 3 of the album</td>
+                                                            <td>value of field 3 of the album</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>                                        
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            albums list
+            albums list
+            albums list
+            <div class="row">
+                <div class="col offset-md-1">
+                    <h2><span class="badge badge-pill badge-info mr-2">N</span>Albums</h2>
+                    <div class="accordion" id="albums">
+                        album-1
+                        album-1
+                        album-1
+                        <div class="card album--1">
+                            <div class="card-header" id="heading-album-1">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#album-1-song-1">
+                                        "album 1 where song 1 appears"
+                                    </button>                                  
+                                </h2>
+                            </div>
+                            <div id="album-1-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td>Name field 1 of the album</td>
+                                                <td>value of field 1 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 2 of the album</td>
+                                                <td>value of field 2 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 3 of the album</td>
+                                                <td>value of field 3 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 4 of the album</td>
+                                                <td>value of field 4 of the album</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        album-2
+                        album-2
+                        album-2
+                        <div class="card album--2">
+                            <div class="card-header" id="heading-album-2">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#album-2-song-1">
+                                        "album 2 where song 1 appears"
+                                    </button>                                  
+                                </h2>
+                            </div>
+                            <div id="album-2-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td>Name field 1 of the album</td>
+                                                <td>value of field 1 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 2 of the album</td>
+                                                <td>value of field 2 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 3 of the album</td>
+                                                <td>value of field 3 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 4 of the album</td>
+                                                <td>value of field 4 of the album</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        album-3
+                        album-3
+                        album-3
+                        <div class="card album--3">
+                            <div class="card-header" id="heading-album-3">
+                                <h2>
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#album-3-song-1">
+                                        "album 3 where song 1 appears"
+                                    </button>                                  
+                                </h2>
+                            </div>
+                            <div id="album-3-song-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <table class="table table-striped table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td>Name field 1 of the album</td>
+                                                <td>value of field 1 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 2 of the album</td>
+                                                <td>value of field 2 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 3 of the album</td>
+                                                <td>value of field 3 of the album</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Name field 4 of the album</td>
+                                                <td>value of field 4 of the album</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            button to back
+            button to back
+            button to back
+            <div class="row my-5">
+                <div class="col">
+                    <button id="back-to-results" type="button" class="btn btn-secundary btn-sm">Back to results list</button>
+                </div>
+            </div> -->
+        </div>  
+        
+        
+        
+        
+        
+        
+    </div>
+    <!-- Finestra de error -->
+    <!-- Finestra de error -->
+    <!-- Finestra de error -->
+    <div class="modal fade" id="error--enllac-no-diposible" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">🐒 Error</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    😊 Enllaç no disponible
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tancar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(window).on('load', function () {
+            // $('#finestra-benvinguda').modal('show');
+            $('.song--name').click(function () {
+                $('#albums-and-versions-results').collapse('show');
+                $('#song-search-results').hide(50);
+            })
+            $('#back-to-results').click(function(){
+                $('#albums-and-versions-results').collapse('hide');
+                $('#song-search-results').show(50);
+            })
+        });
+    </script>
+       <script src="js/song.js"></script>
+</body>
+
+</html>

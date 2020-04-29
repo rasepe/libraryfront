@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <!--   <meta charset="utf-8"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Library - API's Rafel</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .author-name {
+            font-size: large;
+        }
+
+        table {
+            font-size: 0.9rem;
+        }
+
+        .expression-table {
+            width: 70%;
+        }
+        .h2--badges{
+            font-size: 1rem;
+            font-weight: 100;
+
+            /* padding: 0;
+            margin: 0; */
+        }
+        .span--badges,
+        .h2--badges{
+            opacity: 0.7;
+        }
+        ul.expression--list li,
+        ul.manifestations--list li {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+        /* Icona de tancar i obrir */
+        /* .fa{
+            color: #0275d8;
+            margin-left: 15px;
+        }
+        li .fa {
+            transition: .3s transform ease-in-out;
+        }
+        li .collapsed .fa {
+            transform: rotate(90deg);
+        }
+
+        li a[data-toggle="collapse"]:hover, 
+        li a[data-toggle="collapse"]:active, 
+        li a[data-toggle="collapse"]:focus  {
+            text-decoration:none;
+        } */
+        .button-plus-minus{
+            position: relative;
+            width: 15px;
+            height: 15px;
+            margin-right: 15px;
+            display: inline-block;
+        }
+        .button-plus-minus:before, 
+        .button-plus-minus:after {
+            content: "";
+            position: absolute;
+            background-color: #5bc0de;
+            transition: transform 0.25s ease-out;
+        }
+        .button-plus-minus:before {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            margin-top: -2px;
+        }
+        .button-plus-minus:after {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            margin-top: -2px;
+        }
+
+        .button-plus-minus:hover {
+            cursor: pointer;
+        }
+        .collapsed .button-plus-minus:before {
+            transform: rotate(-90deg);
+        }
+        .collapsed .button-plus-minus:after {
+            transform: rotate(-180deg); 
+        }
+        
+    </style>
+<!--     <script src="https://kit.fontawesome.com/8451d591e0.js" crossorigin="anonymous"></script>
+ -->
+</head>
+
+<body>
+<script src="https://kit.fontawesome.com/93b925733d.js" crossorigin="anonymous"></script>
+    <div class="container">
+        <!-- header -->
+        <!-- header -->
+        <!-- header -->
+        <div class="row">
+            <div class="col">
+                <h1>Library <small class="text-muted">- API's Rafel</small></h1>
+            </div>
+        </div>
+        <!-- search -->
+        <!-- search -->
+        <!-- search -->
+        <div class="row mb-2">
+            <div class="col">
+             <!--    <form>  -->
+                    <div class="form-group">
+                        <label for="string">Search author</label>
+                        <input type="text" class="form-control" id="string">
+                        <small id="emailHelp" class="form-text text-muted">Type the text to search and then press the
+                            enter key</small>
+                    </div>
+             <!--    </form> -->
+            </div>
+        </div>
+        <!-- authors -->
+        <!-- authors -->
+        <!-- authors -->
+         <div class="row">
+            <div class="col">
+                <div id="author-search-results" class="mb-2">
+                    <ul class="list-group">
+                       <!--  <li class="list-group-item list-group-item-action">
+                            <a href="#" class="author-name mr-2"">Shakespeare, William</a>
+                            <span class="badge badge-pill badge-info mx-2">2</span> works&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">2</span> expressions&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">N</span> manifestations
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <a href="#" class="author-name mr-2"">Author B</a>
+                            <span class="badge badge-pill badge-info mx-2">3</span> works&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">2</span> expressions&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">N</span> manifestations
+                        </li>
+                        <li class="list-group-item list-group-item-action">
+                            <a href="#" class="author-name mr-2">Author Z</a>
+                            <span class="badge badge-pill badge-info mx-2">3</span> works&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">2</span> expressions&nbsp;
+                            <span class="badge badge-pill badge-info mx-2">N</span> manifestations
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div> 
+
+        <!-- https://getbootstrap.com/docs/4.4/components/collapse/#accordion-example -->
+
+        <div id="work-results" class="collapse">
+            <!-- css .collapse hides content -->
+            <div class="row my-3">
+                <div class="col">
+                    <h2><small class="text-muted">List of works from: </small>Shakespeare, William <small class="text-muted">(1564-1616)</small></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col offset-md-1">
+                    <div class="accordion" id="works">
+                        <!-- work-1 -->
+                        <!-- work-1 -->
+                        <!-- work-1 -->
+                        <div class="card work--1">
+                            <div class="card-header" id="heading-work-1">
+                                <h2>
+                                    <!-- es prescindeix de ajudes a accesibilitat -> aria-expanded="true" aria-controls="work-1" -->
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#expressions-work-1">
+                                        Romeo and Juliet
+                                    </button>
+                                    <span class="h2--badges align-middle"><span class="badge badge-pill badge-info mx-2">2</span> expressions</span>                                    
+                                </h2>
+                            </div>
+
+                            <div id="expressions-work-1" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="my-3">
+                                        <li>
+                                            <a data-toggle="collapse" href="#expression-1-from-work-1">Romeo y Julieta</a>
+                                                <small class="text-muted ml-3">spanish<span class="badge badge-pill badge-info ml-3">1</span> manifestation
+                                                </small>
+                                            <div class="collapse m-3 expression-table" id="expression-1-from-work-1">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>ISBN:</td>
+                                                            <td>978-84-316-4140-5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>DL</td>
+                                                            <td>B. 4193-2009</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Title Proper</td>
+                                                            <td>Romeo y Julieta</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Place publictation</td>
+                                                            <td>Barcelona</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Publisher</td>
+                                                            <td>Vicens Vives</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Year publication</td>
+                                                            <td>2009</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Support</td>
+                                                            <td>Book</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>collection</td>
+                                                            <td>Clásicos universales</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                        <li><a data-toggle="collapse" href="#expression-2-from-work-1">La tragedia de Romeo y Julieta</a>
+                                                <small class="text-muted ml-3">spanish; Astrana Marín, Luis, TRANSLATOR, (1889-1959)<span class="badge badge-pill badge-info ml-3">1</span> manifestation
+                                                </small>  
+                                            <div class="collapse m-3 expression-table" id="expression-2-from-work-1">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>ISBN:</td>
+                                                            <td>888-99-777-444-5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>DL</td>
+                                                            <td>B. 5555-2020</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Title Proper</td>
+                                                            <td>La tragedia de Romeo y Julieta</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Place publictation</td>
+                                                            <td>Barcelona</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Publisher</td>
+                                                            <td>Kroto Kroa</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Year publication</td>
+                                                            <td>2019</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Support</td>
+                                                            <td>Book</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>collection</td>
+                                                            <td>Brarhum murmullum</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- work 2 -->
+                        <!-- work 2 -->
+                        <!-- work 2 -->
+                        <div class="card work--2">
+                            <div class="card-header" id="heading-work-2">
+                                <h2 class="mb-0">
+                                    <!-- es prescindeix de ajudes a accesibilitat -> aria-expanded="true" aria-controls="work-1" -->
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#expressions-work-2">
+                                        Othello
+                                    </button>
+                                    <span class="h2--badges align-middle"><span class="badge badge-pill badge-info mx-2">3</span> expressions</span>
+                                </h2>
+                            </div>
+
+                            <div id="expressions-work-2" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="my-3">
+                                        <li>
+                                            <a data-toggle="collapse" href="#expression-1-from-work-2">Otellium Kridjium</a>
+                                                <small class="text-muted">spanish<span class="badge badge-pill badge-info mx-2">1</span>manifestation</small>
+                                            <div class="collapse m-3 expression-table" id="expression-1-from-work-2">
+                                                <table class="table table-striped table-hover">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>ISBN:</td>
+                                                            <td>978-84-316-4140-5</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>DL</td>
+                                                            <td>B. 4193-2009</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Title Proper</td>
+                                                            <td>Romeo y Julieta</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Place publictation</td>
+                                                            <td>Barcelona</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Publisher</td>
+                                                            <td>Vicens Vives</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Year publication</td>
+                                                            <td>2009</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Support</td>
+                                                            <td>Book</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>collection</td>
+                                                            <td>Clásicos universales</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </li>
+                                        <li><a data-toggle="collapse" href="#expression-2-list-from-work-2">Otelium ant volum pasutim</a>
+                                                <small class="text-muted ml-3">bradikum<span class="badge badge-pill badge-info mx-2">2</span>manifestation</small>
+
+                                            <ul class="collapse" id="expression-2-list-from-work-2">
+                                                <li>
+                                                    <a data-toggle="collapse" href="#manifestation-1-from-expression-2-list-from-work-2">Book</a>
+                                                        <small class="text-muted ml-3">bradikum</small>
+                                                        <div class="collapse m-3 expression-table" id="manifestation-1-from-expression-2-list-from-work-2">
+                                                            <table class="table table-striped table-hover">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>ISBN:</td>
+                                                                        <td>9999-888-333-4444-5</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>DL</td>
+                                                                        <td>B. 4444-2009</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Title Proper</td>
+                                                                        <td>Otelium ant volum pasutim</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Place publictation</td>
+                                                                        <td>Bratislavum</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Publisher</td>
+                                                                        <td>Mostin Kruger</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Year publication</td>
+                                                                        <td>2009</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Support</td>
+                                                                        <td>Book</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>collection</td>
+                                                                        <td>Majitum bradevum</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                </li>
+                                                <li>
+                                                    <a data-toggle="collapse" href="#manifestation-2-from-expression-2-list-from-work-2">Audiobook</a>
+                                                        <small class="text-muted ml-3">bradikum</small>
+                                                        <div class="collapse m-3 expression-table" id="manifestation-2-from-expression-2-list-from-work-2">
+                                                            <table class="table table-striped table-hover">
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>ISBN:</td>
+                                                                        <td>9999-888-333-4444-5</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>DL</td>
+                                                                        <td>B. 4444-2009</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Title Proper</td>
+                                                                        <td>Otelium ant volum pasutim</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Place publictation</td>
+                                                                        <td>Bratislavum</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Publisher</td>
+                                                                        <td>Mostin Kruger</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Year publication</td>
+                                                                        <td>2009</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Support</td>
+                                                                        <td>Audio book</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>collection</td>
+                                                                        <td>Majitum bradevum</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a data-toggle="collapse" href="#expression-3-from-work-2">Varadium Otelis Cutem</a>
+                                                <small class="text-muted">Varidium<span class="badge badge-pill badge-info mx-2">1</span>manifestation</small>
+                                                <div class="collapse m-3 expression-table" id="expression-3-from-work-2">
+                                                    <table class="table table-striped table-hover">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>ISBN:</td>
+                                                                <td>978-84-316-4140-5</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>DL</td>
+                                                                <td>B. 4193-2009</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Title Proper</td>
+                                                                <td>Romeo y Julieta</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Place publictation</td>
+                                                                <td>Barcelona</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Publisher</td>
+                                                                <td>Vicens Vives</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Year publication</td>
+                                                                <td>2009</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Support</td>
+                                                                <td>Book</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>collection</td>
+                                                                <td>Clásicos universales</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- work 3 -->
+                        <!-- work 3 -->
+                        <!-- work 3 -->
+                        <div class="card work--3">
+                            <div class="card-header" id="heading-work-3">
+                                <h2 class="mb-0">
+                                    <!-- es prescindeix de ajudes a accesibilitat -> aria-expanded="true" aria-controls="work-1" -->
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#expressions-work-3">
+                                        El rey Lear
+                                    </button>
+                                    <span class="h2--badges align-middle"><span class="badge badge-pill badge-info ml-3">1</span> expressions</span>
+                                </h2>
+                            </div>
+
+                            <div id="expressions-work-3" class="collapse">
+                                <div class="card-body offset-md-1">
+                                    <ul class="my-3">
+                                        <li>
+                                            <a data-toggle="collapse" href="#expression-list-1-from-work-3">El rey Lear <small class="text-muted">spanish</small></a>
+                                            &nbsp;<span class="badge badge-pill badge-info mx-2">1</span> manifestation
+                                            <ul class="collapse" id="expression-list-1-from-work-3">
+                                                <li>
+                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut explicabo reprehenderit dolorum, numquam nihil iusto provident accusamus ea placeat molestiae similique excepturi consequatur, quis, eveniet dicta ut sequi cumque architecto.
+                                                </li>
+                                            </ul>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row my-5">
+                <div class="col">
+                    <button id="back-to-results" type="button" class="btn btn-secundary btn-sm">Back to results list</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(window).on('load', function () {
+            // $('#finestra-benvinguda').modal('show');
+            $('.author-name').click(function () {
+                console.log('s\'ha fet clic a author-name ');
+                $('#work-results').collapse('show');
+                $('#author-search-results').hide(50);
+            })
+            $('#back-to-results').click(function(){
+                $('#work-results').collapse('hide');
+                $('#author-search-results').show(50);
+            })
+        });
+    </script>
+    <script src="js/author.js"></script>
+</body>
+
+</html>
