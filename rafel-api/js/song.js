@@ -22,7 +22,7 @@ node.addEventListener("keyup", function(event) {
 function searchSong(song) {
 
 
-	var constructedUrl = "http://localhost:8080/song/" + song;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/song/" + song;
 
 
 
@@ -88,7 +88,7 @@ function printSongList(data) {
 
 
 function getNumberVersionsFromSong (songId, i) {
-	var constructedUrl = "http://localhost:8080/songversion/" + songId + "/number";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/songversion/" + songId + "/number";
 
 
 	$.ajax({
@@ -108,7 +108,7 @@ function getNumberVersionsFromSong (songId, i) {
 }
 
 function getNumberAlbumsFromSong (songId, i) {
-	var constructedUrl = "http://localhost:8080/song/" + songId + "/numberworks";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/song/" + songId + "/numberworks";
 
 
 	$.ajax({
@@ -155,15 +155,16 @@ function showSong (num) {
 	
 
 
-	var constructedUrl = "http://localhost:8080/songversion/" + currentSong.id;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/songversion/" + currentSong.id;
 
 
 	$.ajax({
 		type: "GET",
 		url: constructedUrl,
 		success: function(data) {
-			data.sort((a, b) => ((a.month+a.year) < (b.month+b.year)) ? 1 : -1);
-
+			
+			data.sort((a, b) => ((a.year+a.month) < (b.year+b.month)) ? 1 : -1);
+			
 			console.log("has "+ data.length + " versions:");
 			console.log(data);
 			
@@ -229,7 +230,7 @@ function showSong (num) {
 
 function showHeaderAlbumsFromSong(songId, num) {
 	
-	var constructedUrl = "http://localhost:8080/song/"+songId+"/works"; 
+	var constructedUrl = "http://rafelserra.mooo.com:8080/song/"+songId+"/works"; 
 	
 	$.ajax({
 		type: "GET",
@@ -256,14 +257,14 @@ function showHeaderAlbumsFromSong(songId, num) {
 
 function showAlbumsFromSong(songId, num) {
 	
-	var constructedUrl = "http://localhost:8080/song/"+songId+"/works"; 
+	var constructedUrl = "http://rafelserra.mooo.com:8080/song/"+songId+"/works"; 
 	
 	$.ajax({
 		type: "GET",
 		url: constructedUrl,
 		success: function(data) {
 			
-			data.sort((a, b) => ((a.month+a.year) < (b.month+b.year)) ? 1 : -1)
+			data.sort((a, b) => ((a.year+a.month) > (b.year+b.month)) ? 1 : -1)
 			console.log("albums ordenats:"+data)	
 		for (var i=0; i<data.length; i++) {
 			
@@ -321,7 +322,7 @@ function showAlbumsFromSong(songId, num) {
 
 function showNumberAlbumsFromVersion(versionId, numVersion) {
 	
-var constructedUrl = "http://localhost:8080/songversion/"+versionId+"/numberworks"; 
+var constructedUrl = "http://rafelserra.mooo.com:8080/songversion/"+versionId+"/numberworks"; 
 	
 	$.ajax({
 		type: "GET",
@@ -340,13 +341,13 @@ var constructedUrl = "http://localhost:8080/songversion/"+versionId+"/numberwork
 
 function showAlbumsFromVersion(versionId, numVersion) {
 	
-var constructedUrl = "http://localhost:8080/songversion/"+versionId+"/works"; 
+var constructedUrl = "http://rafelserra.mooo.com:8080/songversion/"+versionId+"/works"; 
 
 	$.ajax({
 		type: "GET",
 		url: constructedUrl,
 		success: function(data) {
-			data.sort((a, b) => ((a.month+a.year) < (b.month+b.year)) ? 1 : -1);
+			data.sort((a, b) => ((a.year+a.month) > (b.year+b.month)) ? 1 : -1);
 			for (var i=0; i<data.length; i++) {
 				
 				document.getElementById("album--list--of--the--version"+numVersion).innerHTML +=

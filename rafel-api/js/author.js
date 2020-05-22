@@ -76,7 +76,7 @@ function showAuthor (num) {
 
 
 
-	var constructedUrl = "http://localhost:8080/work/" + currentAuthor.id;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/work/" + currentAuthor.id;
 
 
 	$.ajax({
@@ -121,7 +121,7 @@ function showWorksFromAuthor(data) {
 
 			for (var i=0; i<data.length; i++) {
 
-				//var constructedUrl = "http://localhost:8080/expression/" + data[i].id + "/number";
+				//var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + data[i].id + "/number";
 				var uniformTitle = data[i].uniformTitle;
 
 				document.getElementById("works").innerHTML += 
@@ -175,7 +175,7 @@ function showWorksFromAuthor(data) {
 function getExpressionsFromWork(workId, num) {
 	
 		
-		var constructedUrl = "http://localhost:8080/expression/" + workId;
+		var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + workId;
 
 
 $.ajax({
@@ -272,7 +272,7 @@ $.ajax({
 
 
 function getManifestationsFromExpression(expression,numWork,numExp) {
-	var constructedUrl = "http://localhost:8080/manifestation/" + expression.id;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/manifestation/" + expression.id;
 
 
 	$.ajax({
@@ -436,7 +436,7 @@ function getManifestationsFromExpression(expression,numWork,numExp) {
 }
 
 function getNumberManifestationsFromExpression(expression,numWork,numExp) {
-	var constructedUrl = "http://localhost:8080/manifestation/number/" + expression.id;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/manifestation/number/" + expression.id;
 
 
 	$.ajax({
@@ -538,7 +538,7 @@ function backToResults() {
 }
 
 function getNumberExpressionsFromWork (workId, i) {
-	var constructedUrl = "http://localhost:8080/expression/" + workId + "/number";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + workId + "/number";
 
 
 	$.ajax({
@@ -570,7 +570,7 @@ function sleep(milliseconds) {
 function searchAuthor(author) {
 
 
-	var constructedUrl = "http://localhost:8080/author/" + author;
+	var constructedUrl = "http://rafelserra.mooo.com:8080/author/" + author;
 
 
 	$.ajax({
@@ -656,7 +656,7 @@ function printAuthorList(data) {
 
 
 function getNumberWorksFromAuthor (authorId, i) {
-	var constructedUrl = "http://localhost:8080/work/" + authorId + "/number";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/work/" + authorId + "/number";
 
 
 	$.ajax({
@@ -677,7 +677,7 @@ function getNumberWorksFromAuthor (authorId, i) {
 
 
 function getNumberExpressionsFromAuthor (authorId, i) {
-	var constructedUrl = "http://localhost:8080/expression/" + authorId + "/numberfromauthor";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + authorId + "/numberfromauthor";
 
 
 	$.ajax({
@@ -698,7 +698,7 @@ function getNumberExpressionsFromAuthor (authorId, i) {
 
 
 function getNumberManifestationsFromAuthor (authorId, i) {
-	var constructedUrl = "http://localhost:8080/manifestation/" + authorId + "/numberfromauthor";
+	var constructedUrl = "http://rafelserra.mooo.com:8080/manifestation/" + authorId + "/numberfromauthor";
 
 
 	$.ajax({
