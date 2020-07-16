@@ -1,28 +1,48 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Insert title here</title>
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="js/dicegame.js"></script>
-</head>
-<body onload="welcome3()"> 
-  <!-- onload="loadIds('playerId')" -->  
-  <div class="container">
-<p id="welcome3"></p>
 
-	<!--	<label for="playerId">Choose one id to update player name</label> <br>
+<head>
+	<title>Change name player</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="js/dicegame.js"></script>
+</head>
+
+<body onload="welcome3()">
+	<!-- onload="loadIds('playerId')" -->
+	<div class="container">
+		<div class="row mt-5">
+			<div class="col">
+				<h1>Change <small class="text-muted">name player</small></h1>
+			</div>
+		</div>
+		<div class="row mt-5">
+			<div class="col">
+				<p id="welcome3"></p>
+			</div>
+		</div>
+
+		<!--	<label for="playerId">Choose one id to update player name</label> <br>
 		<select id="playerId">
 		</select> 
-		<br>  --> 
-		<label for="editName">Enter new name:</label> 
-		<input type="text" id="editName"> 
-		<input class="btn btn-primary" id="submit-button" type="submit" value="Save changes" onclick="updatePlayer()">
-	
-	<p>
-		<a href="index_login.html">BACK TO INDEX</a>
-	</p>
+		<br>  -->
+		<div class="row mt-5">
+			<div class="col">
+				<p>
+					<label for="editName">Enter new name:</label>
+					<input type="text" id="editName">
+					<input class="btn btn-primary" id="submit-button" type="submit" value="Save changes" onclick="updatePlayer()">
+				</p>
+			</div>
+		</div>		
+		<div class="row mt-5">
+			<div class="col ">
+				<p>
+					<a href="index.html">Back to index</a>
+				</p>
+			</div>
+		</div>
 	</div>
 </body>
+
 </html>

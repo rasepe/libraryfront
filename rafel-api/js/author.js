@@ -97,17 +97,25 @@ function showAuthor (num) {
 }
 
 function showWorksFromAuthor(data) {
+	
+	
+	
 	console.log("data:");
 	data.sort((a, b) => (a.uniformTitle > b.uniformTitle) ? 1 : -1);
 	console.log(data);
 
 	document.getElementById("work-results").innerHTML += 
-		"<div class='row'>"+
+		"<div class='row' id='list-works-from-chosen-author'>"+
 		"<div class='col offset-md-1'>"+
 		"<div class='accordion' id='works'>"+
 		"</div>"+
 		"</div>"+
-		"</div>"
+		"</div>"+
+	"<div class='row my-3'>"+
+	"<div class='col' id='list-of-related-works' style='display: none;'>"+
+	
+	"</div>"+
+	"</div>";
 
 		document.getElementById("work-results").innerHTML += 
 
@@ -115,7 +123,7 @@ function showWorksFromAuthor(data) {
 			"<div class='col'>"+
 			"<button id='back-to-results' type='button' class='btn btn-secundary btn-sm' onclick='backToResults()'>Back to results list</button>"+
 			"</div>"+
-			"</div>"
+			"</div>";
 
 
 
@@ -133,11 +141,18 @@ function showWorksFromAuthor(data) {
 					"<div class='button-plus-minus'></div>"+
 					uniformTitle+
 					"</button>"+
-					"<span class='h2--badges align-middle'><span class='badge badge-pill badge-info mx-2' id='numberExpressions"+(i+1)+"'></span> expressions</span>"+                                  
+					"<span class='h2--badges align-middle'><span class='badge badge-pill badge-info mx-2' id='numberExpressions"+(i+1)+"'></span> expressions</span>"+     
+					"<button class='btn btn-link collapsed' id='buttonRelatedWorks' type='button' data-toggle='collapse' data-target='#list-of-related-works' onclick='makeVisible()' style='display:none;'>" + // #expressions-related-work-"+(i+1)+"'>"+    
+					"<span id='numberRelatedWorksExt"+(i+1)+"' style='display:none;'><span class='h2--badges align-middle'><span class='badge badge-pill badge-info mx-2' id='numberRelatedWorks"+(i+1)+"'></span><a class='javalink'>related works</a></span></span>"+   //onclick='showRelatedWorks("+data[i].id+","+i+")'  
+					"<div class='button-plus-minus'></div>"+
+					"</button>"+
 					"</h2>"+
 					"</div>"+
 					"</div>";
 
+				
+				
+				
 				console.log("holi1");
 
 				(data[i].id, i);
@@ -145,6 +160,12 @@ function showWorksFromAuthor(data) {
 				getNumberExpressionsFromWork(data[i].id, i);
 				
 				getExpressionsFromWork(data[i].id,(i+1));
+				
+				getNumberRelatedWorksFromWork(data[i].id, i);
+				
+				
+				
+				showRelatedWorks(data[i].id,i);
 				
 				sleep(200);
 				
@@ -557,6 +578,486 @@ function getNumberExpressionsFromWork (workId, i) {
 
 }
 
+function getNumberRelatedWorksFromWork (workId, i) {
+	var constructedUrl = "http://rafelserra.mooo.com:8080/work/" + workId + "/numrelatedworks";
+
+
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+			if (data>0) {
+				document.getElementById("buttonRelatedWorks").style.display = "inline";
+			document.getElementById("numberRelatedWorks"+(i+1)).innerHTML = data;
+			document.getElementById("numberRelatedWorksExt"+(i+1)).style.display = "inline";
+			} else {
+				//document.getElementById("buttonRelatedWorks").style.display = "none";
+			}
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+}
+
+function showRelatedWorks (workId, i) {
+	
+	
+	
+	console.log("workId" + workId);
+	console.log("i" + i);
+	
+	var constructedUrl = "http://rafelserra.mooo.com:8080/work/getsingle/" + workId;
+	
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+
+			printRelatedWorkList(data, i);
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+	
+
+	
+
+	
+	
+	
+
+	
+}
+
+
+function makeVisible() {
+	if (document.getElementById("list-of-related-works").style.display == "none") {
+	document.getElementById("list-of-related-works").style.display = "block";
+	} else {
+			//document.getElementById("list-of-related-works").innerHTML = "";
+			document.getElementById("list-of-related-works").style.display = "none";
+		}
+}
+
+
+function printRelatedWorkList(data, i) {
+	
+	
+	console.log(data.uniformTitle);
+	console.log(i);
+	
+var constructedUrl = "http://rafelserra.mooo.com:8080/work/" + data.id + "/relatedworks";
+	
+	console.log(constructedUrl);
+	
+	
+	//if (document.getElementById("list-of-related-works").style.display == "none") {
+		//document.getElementById("list-of-related-works").style.display = "block";
+		document.getElementById("list-of-related-works").innerHTML +=
+			"<h2 id='titleRelatedWorks'><small class='text-muted'>List of related works of: </small>"+ data.uniformTitle +"</h2>"+	
+		"<div class='row' id='list-works-from-chosen-author'>"+
+		"<div class='col offset-md-1'>"+
+		"<div class='accordion' id='related-works'>"+
+		"</div>"+
+		"</div>"+
+		"</div>";
+			
+			$.ajax({
+				type: "GET",
+				url: constructedUrl,
+				success: function(data) {
+
+					for (var i=0; i<data.length; i++) {	
+
+						document.getElementById("related-works").innerHTML += 
+							
+							
+							
+							"<div class='card related-work--"+(i+1)+"'>"+
+							"<div class='card-header' id='heading-related-work-"+(i+1)+"'>"+
+							"<h2 id='h-related-work-author"+(i+1)+"'>"+
+							"<button class='btn btn-link collapsed' type='button' data-toggle='collapse' data-target='#expressions-related-work-"+(i+1)+"' id='related-work-author"+(i+1)+"'>"+     //onclick='getExpressionsFromWork("+data[i].id+","+(i+1)+")'
+							"<div class='button-plus-minus'></div>"+
+							data[i].uniformTitle+" \/\ ";
+						"</button>"+
+						"</h2>"+
+						"</div>"+
+						"</div>";
+							for (var j=0; j<data[i].authors.length; j++) {
+								document.getElementById("related-work-author"+(i+1)).innerHTML += 
+								data[i].authors[j].name + " " + data[i].authors[j].surname;
+								if (data[i].authors.length>1 && j<data[i].authors.length-1) {
+									document.getElementById("related-work-author"+(i+1)).innerHTML += " ; ";
+								}
+							}
+							
+							document.getElementById("h-related-work-author"+(i+1)).innerHTML += 
+							
+							"<span class='h2--badges align-middle'><span class='badge badge-pill badge-info mx-2' id='numberExpressionsRelatedWork"+(i+1)+"'></span> expressions</span>";   
+							//"<div class='button-plus-minus'></div>"+   
+//							"</h2>"+
+//							"</div>"+
+//							"</div>";
+							
+							
+							
+						//	data[i].uniformTitle;
+							
+							
+							
+							getNumberExpressionsFromRelatedWork(data[i].id, i);
+							
+							getExpressionsFromRelatedWork(data[i].id,(i+1));
+							
+							
+							
+							sleep(200);
+
+					}
+
+				},
+				error: function(){
+					alert("json not found");
+				}
+			});
+			
+			
+			
+	//	} else {
+	//	document.getElementById("list-of-related-works").innerHTML = "";
+	//	document.getElementById("list-of-related-works").style.display = "none";
+	//}
+
+	
+	
+
+	
+	
+	
+	
+
+}
+
+function getNumberExpressionsFromRelatedWork (workId, i) {
+	var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + workId + "/number";
+
+
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+
+			document.getElementById("numberExpressionsRelatedWork"+(i+1)).innerHTML = data;
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+}
+
+
+function getExpressionsFromRelatedWork(workId, num) {
+	
+	
+	var constructedUrl = "http://rafelserra.mooo.com:8080/expression/" + workId;
+
+
+$.ajax({
+type: "GET",
+url: constructedUrl,
+success: function(data) {
+
+
+	//showExpressions(data, num);
+
+	console.log(data);
+	console.log("num:" + num);
+	
+	document.getElementsByClassName("related-work--"+num)[0].innerHTML +=
+		"<div id='expressions-related-work-"+num+"' class='collapse'>"+
+    "<div class='card-body-related offset-md-1'>"+
+    "</div>"+
+    "</div>"
+	
+	for (var i=0; i<data.length; i++) {
+		
+		//document.getElementsByClassName("work--"+num)[0].innerHTML +=
+		document.getElementsByClassName("card-body-related")[num-1].innerHTML +=
+		
+	        "<ul class='my-3 expression--list'>"+
+	        "<li id='expression"+(i+1)+"-from-related-work-"+num+"'>"+
+            "<a class='collapsed' data-toggle='collapse' href='#expression-"+(i+1)+"-from-related-work-"+num+"'><div class='button-plus-minus'></div>"+data[i].title+"</a>"+ //<i class='fa fa-chevron-down pull-right'></i>
+                "<small class='text-muted ml-3' id='dataFromExpression"+(i+1)+"-from-related-work-"+num+"'>Language: "+data[i].language+"; "; //<span class='badge badge-pill badge-info ml-3'>1</span> manifestation
+               
+        
+		for (var j=0; j<data[i].collaborators.length; j++) {
+			var currentCollaborator = data[i].collaborators[j];
+			var surname="";
+			var name="";
+			var yearBirth="";
+			var yearDeath="";
+			if (currentCollaborator.surname != null) {
+				surname = currentCollaborator.surname + ", ";
+			}
+			if (currentCollaborator.name != null) {
+				name = currentCollaborator.name;
+			}
+			if (currentCollaborator.yearBirth != null) {
+				yearBirth = " (" + currentCollaborator.yearBirth + "-";
+			}
+			if (currentCollaborator.yearDeath != null) {
+				yearDeath = currentCollaborator.yearDeath + ")";
+			}
+
+
+			var collaboratorString1 = surname + name;
+			var collaboratorString2 = "";
+			var collaboratorString3 = ", " + data[i].collaborators[j].function + ". ";
+			if (currentCollaborator.yearBirth != null || currentCollaborator.yearDeath != null) {
+				collaboratorString2 = yearBirth + yearDeath;
+			}
+			
+			
+			document.getElementById("dataFromExpression"+(i+1)+"-from-related-work-"+num).innerHTML += collaboratorString1+collaboratorString2+collaboratorString3;
+			
+			console.log("pausa");
+		}
+		
+		document.getElementById("dataFromExpression"+(i+1)+"-from-related-work-"+num).innerHTML += "<span class='badge badge-pill badge-info ml-3' id='spanFromExpression"+(i+1)+"-from-related-work-"+num+"'>";
+			
+			getNumberManifestationsFromExpressionRelated(data[i],num,(i+1));
+			
+			document.getElementById("dataFromExpression"+(i+1)+"-from-related-work-"+num).innerHTML += "</span> manifestation";
+		
+		document.getElementsByClassName("card-body")[num-1].innerHTML +=
+			
+                "</small>";
+            
+               getManifestationsFromExpressionRelated(data[i],num,(i+1));
+         
+                document.getElementsByClassName("card-body")[num-1].innerHTML +=        
+                "</li>"+
+		        "</ul>";
+                
+       
+        
+     
+	}
+	
+	
+	
+	
+},
+error: function(){
+	alert("json not found");
+}
+});
+}
+
+
+
+function getNumberManifestationsFromExpressionRelated(expression,numWork,numExp) {
+	var constructedUrl = "http://rafelserra.mooo.com:8080/manifestation/number/" + expression.id;
+
+
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+		
+				document.getElementById("spanFromExpression"+numExp+"-from-related-work-"+numWork).innerHTML += data;
+					
+			
+			
+			
+			
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+}
+
+
+
+function getManifestationsFromExpressionRelated(expression,numWork,numExp) {
+	var constructedUrl = "http://rafelserra.mooo.com:8080/manifestation/" + expression.id;
+
+
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+			console.log("Num obra: " + numWork);
+			console.log("Num exp: " + numExp);
+			var manif = JSON.parse(data);
+			console.log(manif);
+			for (var i=0; i<manif.length; i++) {
+				console.log(manif[i].isbn);	
+			}
+			
+			if (manif.length == 1) {
+				//SI NOMES HI HA UNA MANIFESTACIÓ
+				document.getElementById("expression"+numExp+"-from-related-work-"+numWork).innerHTML +=
+	                "<div class='collapse m-3 expression-table' id='expression-"+numExp+"-from-related-work-"+numWork+"'>"+
+	                "<table class='table table-striped table-hover'>"+
+	                    "<tbody>"+                 
+	                        "<tr>"+
+	                            "<td>ISBN:</td>"+
+	                            "<td>"+manif[0].isbn+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>DL</td>"+
+	                            "<td>"+manif[0].DL+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Title Proper</td>"+
+	                            "<td>"+manif[0].titleProper+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Place publication</td>"+
+	                            "<td>"+manif[0].placePublication+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Publisher</td>"+
+	                            "<td>"+manif[0].publisher+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Year publication</td>"+
+	                            "<td>"+manif[0].yearPublication+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Support</td>"+
+	                            "<td>"+manif[0].support+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+	                            "<td>Collection</td>"+
+	                            "<td>"+manif[0].collection+"</td>"+
+	                        "</tr>"+
+	                        "<tr>"+
+                            "<td>Collection number</td>"+
+                            "<td>"+manif[0].collectionNumber+"</td>"+
+                        "</tr>"+
+	                    "</tbody>"+
+	                "</table>"+
+	            "</div>";
+				
+	                //SI HI MA MES D'UNA MANIFESTACIÓ:
+	                /*<ul class="collapse" id="expression-2-list-from-work-2">
+                 <li>
+                     <a class="collapsed" data-toggle="collapse" href="#manifestation-1-from-expression-2-list-from-work-2">Book<i class="fa fa-chevron-down pull-right"></a>
+                         <small class="text-muted ml-3">bradikum</small>
+                         <div class="collapse m-3 expression-table" id="manifestation-1-from-expression-2-list-from-work-2">
+                             <table class="table table-striped table-hover">
+                                 <tbody>
+                                     <tr>
+                                         <td>ISBN:</td>
+                                         <td>9999-888-333-4444-5</td>
+                                     </tr>
+                                     <tr>
+                                         <td>DL</td>
+                                         <td>B. 4444-2009</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Title Proper</td>
+                                         <td>Otelium ant volum pasutim</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Place publictation</td>
+                                         <td>Bratislavum</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Publisher</td>
+                                         <td>Mostin Kruger</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Year publication</td>
+                                         <td>2009</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Support</td>
+                                         <td>Book</td>
+                                     </tr>
+                                     <tr>
+                                         <td>collection</td>
+                                         <td>Majitum bradevum</td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                 </li>
+                 <li>
+                     <a data-toggle="collapse" href="#manifestation-2-from-expression-2-list-from-work-2">Audiobook</a>
+                         <small class="text-muted ml-3">bradikum</small>
+                         <div class="collapse m-3 expression-table" id="manifestation-2-from-expression-2-list-from-work-2">
+                             <table class="table table-striped table-hover">
+                                 <tbody>
+                                     <tr>
+                                         <td>ISBN:</td>
+                                         <td>9999-888-333-4444-5</td>
+                                     </tr>
+                                     <tr>
+                                         <td>DL</td>
+                                         <td>B. 4444-2009</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Title Proper</td>
+                                         <td>Otelium ant volum pasutim</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Place publictation</td>
+                                         <td>Bratislavum</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Publisher</td>
+                                         <td>Mostin Kruger</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Year publication</td>
+                                         <td>2009</td>
+                                     </tr>
+                                     <tr>
+                                         <td>Support</td>
+                                         <td>Audio book</td>
+                                     </tr>
+                                     <tr>
+                                         <td>collection</td>
+                                         <td>Majitum bradevum</td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                 </li>
+             </ul>*/
+			}
+			
+			
+			
+			
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+}
+
+
 function sleep(milliseconds) {
 	var start = new Date().getTime();
 	for (var i = 0; i < 1e7; i++) {
@@ -632,9 +1133,9 @@ function printAuthorList(data) {
 		document.getElementsByClassName("list-group")[0].innerHTML += 
 			"<li class='list-group-item list-group-item-action'>"+
 			"<a href='#' class='author-name mr-2' onclick='showAuthor("+i+")'>"+result+"</a>"+
-			"<span class='badge badge-pill badge-info mx-2'id='numberworksauthor"+i+"'></span> works&nbsp;"+
-			"<span class='badge badge-pill badge-info mx-2'id='numberexpressionsauthor"+i+"'></span> expressions&nbsp;"+
-			"<span class='badge badge-pill badge-info mx-2'id='numbermanifestationsauthor"+i+"'></span> manifestations"+
+			"<span id='numberworksauthorext"+i+"' style='display:none;'><span class='badge badge-pill badge-info mx-2'id='numberworksauthor"+i+"'></span> works&nbsp;</span>"+
+			"<span id='numberexpressionsauthorext"+i+"' style='display:none;'><span class='badge badge-pill badge-info mx-2'id='numberexpressionsauthor"+i+"'></span> expressions&nbsp;</span>"+
+			"<span id='numbermanifestationsauthorext"+i+"' style='display:none;'><span class='badge badge-pill badge-info mx-2'id='numbermanifestationsauthor"+i+"'></span> manifestations</span>"+
 			"</li>";
 
 		getNumberWorksFromAuthor(data[i].id, i);
@@ -664,8 +1165,11 @@ function getNumberWorksFromAuthor (authorId, i) {
 		url: constructedUrl,
 		success: function(data) {
 
-
+			if (data>0) {
 			document.getElementById("numberworksauthor"+i).innerHTML = data;
+			document.getElementById("numberworksauthorext"+i).style.display = "block";
+			
+			}
 
 		},
 		error: function(){
@@ -685,9 +1189,10 @@ function getNumberExpressionsFromAuthor (authorId, i) {
 		url: constructedUrl,
 		success: function(data) {
 
-
+			if (data>0) {
 			document.getElementById("numberexpressionsauthor"+i).innerHTML = data;
-
+			document.getElementById("numberexpressionsauthorext"+i).style.display = "block";
+			}
 		},
 		error: function(){
 			alert("json not found");
@@ -706,9 +1211,10 @@ function getNumberManifestationsFromAuthor (authorId, i) {
 		url: constructedUrl,
 		success: function(data) {
 
-
+			if (data>0) {
 			document.getElementById("numbermanifestationsauthor"+i).innerHTML = data;
-
+			document.getElementById("numbermanifestationsauthorext"+i).style.display = "block";
+			}
 		},
 		error: function(){
 			alert("json not found");
