@@ -1,4 +1,3 @@
-// TODO: algunes regions del nord tenen colors similars
 
 var regions= [
 	{ "id": "1", "name": "Alt Camp", "owner":"1", "formerOwner":"1","color": "#808080", "points": "1", "defeated": false}, 
@@ -248,8 +247,6 @@ var borderingCountries = [
 	
 const entries = Object.entries(regions);
 
-
-
 var messageText;
 var conquerorId;
 var newOwner;
@@ -281,42 +278,31 @@ let firstPlay = true;
 
 
 function startNewWar() {
-	
-	document.getElementById("startwar").style.display = "none";
-	
 
-	
+	document.getElementById("startwar").style.display = "none";
+
 	let showElements = document.querySelectorAll(".gameboard");
 
 	for (let i = 0; i < showElements.length; i++) {
 		showElements[i].style.display = "flex";
 	}
-	
+
 	document.getElementById("countryList").style.display = "block";
-	
+
 	document.getElementById("countries").style.width = "100%";
-	
-	
-	initializeGame();
+
 }
 
 
-function initializeGame() {
-	console.log("s'ha iniciat un joc nou");
-/*	for (x of regions) {
-		  x.points = 1;
-		}*/
-	
-}
 
 function reset() {
-/*	let messageDiv = document.getElementById("message");
+	/*	let messageDiv = document.getElementById("message");
     messageDiv.setAttribute("class", "alert alert-primary");
     messageDiv.innerHTML ="Welcome to the Catalan civil war application. A region chosen at random conquers a neighboring region and makes it its own. Until only one can remain. Disclaimer: No person or animal will be injured.";
     tabla.clear();
     tabla.draw();
     startNewWar();*/
-location.reload();
+	location.reload();
 
 }
 
@@ -324,239 +310,210 @@ location.reload();
 
 function play() {
 
-/*    let constructedUrl = "https://run.mocky.io/v3/678561f1-93a3-4d59-a83f-8514dcf41d29";
 
-    $.ajax({
-        type: "GET",
-        url: constructedUrl,
-        success: function (data) {
-            manage(data);
-        },
-        error: function () {
-            alert("json not found");
-        }
-    });*/
-    
-    
-
-  //TRIEM A L'ATZAR ID COMARCA CONQUERIDORA
+	//TRIEM A L'ATZAR ID COMARCA CONQUERIDORA
 	conquerorId = Math.floor(Math.random()*regions.length)+1;
 	console.log("conquerorId =" + conquerorId);
-	
-	
 	newOwner = regions[conquerorId-1].owner;
-	
-	
+
+
 	//CONSULTEM COMARQUES FRONTERERES DE LA CONQUERIDORA
 	var arrayBorderingCountries = [];
 	for (x of borderingCountries) {
-		  if (x.country_id == conquerorId) {
-		
-			  arrayBorderingCountries.push(x.bordering_country_id);
-			  console.log("arrayBorderingCountries:" + arrayBorderingCountries);
-		  }
+		if (x.country_id == conquerorId) {
+
+			arrayBorderingCountries.push(x.bordering_country_id);
+			console.log("arrayBorderingCountries:" + arrayBorderingCountries);
 		}
+	}
+
 	//ESCOLLIM COMARCA CONQUERIDA ENTRE LES FRONTERERES
-	
-	
+
 	var chosenPosition = Math.floor(Math.random()*arrayBorderingCountries.length-1)+1;
-	
+
 	disputedRegionId = arrayBorderingCountries[chosenPosition];
-	
+
 	disputedRegion = regions[disputedRegionId-1];
-	
+
 	//SI LA COMARCA CONQUERIDA JA PERTANY AL CONQUERIDOR, N'ASSIGNEM UNA ALTRA
-		
-	
-	 while (newOwner == disputedRegion.owner) {
+
+	while (newOwner == disputedRegion.owner) {
 		//CONSULTEM COMARQUES FRONTERERES DE LA CONQUERIDA
-	var arrayBorderingCountries2 = [];
-	for (x of borderingCountries) {
-		  if (x.country_id == disputedRegionId) {
-		
-			  arrayBorderingCountries2.push(x.bordering_country_id);
-			  console.log("arrayBorderingCountries2:" + arrayBorderingCountries2);
-		  }
+		var arrayBorderingCountries2 = [];
+		for (x of borderingCountries) {
+			if (x.country_id == disputedRegionId) {
+
+				arrayBorderingCountries2.push(x.bordering_country_id);
+				console.log("arrayBorderingCountries2:" + arrayBorderingCountries2);
+			}
 		}
 		//ESCOLLIM NOVA COMARCA CONQUERIDA ENTRE LES FRONTERERES
-	
-	
-	var chosenPosition2 = Math.floor(Math.random()*arrayBorderingCountries2.length-1)+1;
-	
-	disputedRegionId = arrayBorderingCountries2[chosenPosition2];
-	
-	disputedRegion = regions[disputedRegionId-1];
-		
-		}
-	
+
+		var chosenPosition2 = Math.floor(Math.random()*arrayBorderingCountries2.length-1)+1;
+
+		disputedRegionId = arrayBorderingCountries2[chosenPosition2];
+
+		disputedRegion = regions[disputedRegionId-1];
+
+	}
+
 	//JA SABEM QUI HA GUANYAT I QUI HA PERDUT
 	var idLoser = disputedRegion.owner;
-	// winner = newOwner
-	
+
 	//ASSIGNEM EXPROPIETARI I NOU PROPIETARI DE LA COMARCA CONQUERIDA 
-	
+
 	disputedRegion.formerOwner = disputedRegion.owner;
 	disputedRegion.owner = newOwner;
-	
+
 	//CANVIEM PUNTUACIONS
-	
+
 	regions[idLoser-1].points--;
 	regions[newOwner-1].points++;
-	
+
 	if (regions[idLoser-1].points<0) {
 		regions[idLoser-1].points = 0;
 	}
-	
+
 	if (regions[idLoser-1].points == 0) {
-		regions[idLoser-1].defeated = true;  //SEMBLA QUE NO ES COMPLEIX SEMPRE, P EX SI HA CONQUERIT I PERDUT
-		//countriesLeft--;
+		regions[idLoser-1].defeated = true;  
 	}
-	
+
 	var countriesLeft = 0;
-	
+
 	for (x of regions) {
 		if (x.defeated == false) {
 			countriesLeft++;
 		}
 	}
-	//
-	
+
+
 	if (countriesLeft < 2) {
 		finalMovement = true;
 	}
-	
+
 	var thisMessage = regions[newOwner-1].name + " has conquered " + disputedRegion.name + " formerly owned by " + regions[idLoser-1].name + ".";
 	if (regions[idLoser-1].defeated) {
-	thisMessage += 	" " + regions[idLoser-1].name + " has been defeated." ;
+		thisMessage += 	" " + regions[idLoser-1].name + " has been defeated." ;
 	}
 	if (!finalMovement) {
 		thisMessage += " There are " + countriesLeft + " countries left.";
 	} else {
 		thisMessage += " " + regions[newOwner-1].name + " has won the war.";
 	}
-	
-	
+
+
 	movement[0]= thisMessage; 
 	movement[1]= regions[newOwner-1].id;
 	movement[2]= disputedRegion.id;
 	movement[3]= regions[idLoser-1].id;
 	movement[4]= finalMovement;
-	
 
 
-    if (firstPlay) {
-        // TODO: wargame/new
-        changeColorMessage();
-        firstPlay = false;
-    }
+
+	if (firstPlay) {
+		// TODO: wargame/new
+		changeColorMessage();
+		firstPlay = false;
+	}
 
 
 	manage(movement);
 }
 
 function changeColorMessage() {
-    let messageDiv = document.getElementById("message");
-    messageDiv.setAttribute("class", "alert alert-warning");
+	let messageDiv = document.getElementById("message");
+	messageDiv.setAttribute("class", "alert alert-warning");
 }
 
 function manage(data) {
 
-    messageText = data[0];
-    conquerorId = data[1];
-    disputedRegionId = data[2];
-    formerOwnerId = data[3];
-    finalMovement = data[4];
+	messageText = data[0];
+	conquerorId = data[1];
+	disputedRegionId = data[2];
+	formerOwnerId = data[3];
+	finalMovement = data[4];
 
-    console.log("JSON response ");
-    console.log("messageText: " + messageText);
-    console.log("conquerorId: " + conquerorId);
-    console.log("disputedRegionId: " + disputedRegionId);
-    console.log("formerOwnerId: " + formerOwnerId);
-    console.log("finalMovement: " + finalMovement);
+	console.log("JSON response ");
+	console.log("messageText: " + messageText);
+	console.log("conquerorId: " + conquerorId);
+	console.log("disputedRegionId: " + disputedRegionId);
+	console.log("formerOwnerId: " + formerOwnerId);
+	console.log("finalMovement: " + finalMovement);
 
-    // Change the message text and animate
-    changeMessageTextAndAnimation(messageText)
+	// Change the message text and animate
+	changeMessageTextAndAnimation(messageText)
 
-    // 
-    let colorConqueringEmpireId = getColorById(conquerorId);
-    paintRegion(disputedRegionId, colorConqueringEmpireId);
-    
-    
-    // console.log(entries);
-     //entries[parseInt(conquerorId) -1][1].points++;
-     //entries[parseInt(formerOwnerId) -1][1].points--;
-     console.log (entries[parseInt(conquerorId) -1][1].points);
-     console.log (entries[parseInt(formerOwnerId) -1][1].points);
-     
- 	tabla.clear();
- 	//document.getElementById("playersList").style.display = "block";
- 	//console.log(JSON.stringify(objects));
- 	//var result = "";
- 	//if (objects.length>0) {
- 		for (var i=0; i<regions.length; i++) {
- 			if (regions[i].points > 0) {
- 				tabla.row.add({
- 					
- 					"region" 	: regions[i].name,
- 					"points" : regions[i].points
- 					
- 				});	
- 				
- 			};
- 			
- 			//result += JSON.stringify(objects[i])+"<br>";
- 		}
- 		tabla.draw();
-    
+	let colorConqueringEmpireId = getColorById(conquerorId);
+	paintRegion(disputedRegionId, colorConqueringEmpireId);
+
+	console.log (entries[parseInt(conquerorId) -1][1].points);
+	console.log (entries[parseInt(formerOwnerId) -1][1].points);
+
+	tabla.clear();
+
+	for (var i=0; i<regions.length; i++) {
+		if (regions[i].points > 0) {
+			tabla.row.add({
+
+				"region" 	: regions[i].name,
+				"points" : regions[i].points
+
+			});	
+
+		};
+
+
+	}
+	tabla.draw();
+
 	if (finalMovement) {
 		endGame(conquerorId);
 	}
-    
+
 }
 
 function changeMessageTextAndAnimation(messageText) {
-    let messageDiv = document.getElementById("message");
-    messageDiv.innerHTML = messageText;
+	let messageDiv = document.getElementById("message");
+	messageDiv.innerHTML = messageText;
 
-    messageDiv.classList.add("animatedTransitionMessage");
-    messageDiv.addEventListener('animationend', function () {
-        messageDiv.classList.remove('animatedTransitionMessage');
-    }, false);
+	messageDiv.classList.add("animatedTransitionMessage");
+	messageDiv.addEventListener('animationend', function () {
+		messageDiv.classList.remove('animatedTransitionMessage');
+	}, false);
 
 }
 
 function getColorById(id) {
-    for (var i = 0; i < regions.length; i++) {
-        if (regions[i].id == id) {
-            return regions[i].color;
-        }
-    }
+	for (var i = 0; i < regions.length; i++) {
+		if (regions[i].id == id) {
+			return regions[i].color;
+		}
+	}
 }
 
 function paintRegion(disputedRegionId, colorConqueringEmpireId) {
 
-    let region = document.getElementById(disputedRegionId.toString());
+	let region = document.getElementById(disputedRegionId.toString());
 
-    region.classList.add("animatedTransitionRegionConquered");
-    region.style.fill = colorConqueringEmpireId;
-    region.addEventListener('animationend', function () {
-        region.classList.remove('animatedTransitionRegionConquered');
-    }, false);
+	region.classList.add("animatedTransitionRegionConquered");
+	region.style.fill = colorConqueringEmpireId;
+	region.addEventListener('animationend', function () {
+		region.classList.remove('animatedTransitionRegionConquered');
+	}, false);
 
 }
 
 function paintTheOriginalColorRegions() {
-    for (i in regions) { // Paint regions with color
-        document.getElementById(regions[i].id).style.fill = regions[i].color;
-    }
+	for (i in regions) { // Paint regions with color
+		document.getElementById(regions[i].id).style.fill = regions[i].color;
+	}
 }
 
 function endGame(conquerorId) {
-	//document.getElementById("message").innerHTML += " " + regions[conquerorId-1].name + " has won the game.";
 	document.getElementById("countryList").style.display = "none";
-	 document.getElementById("message").setAttribute("class", "alert alert-success");
-	 document.getElementById("endWar").style.display = "block";
-	 
+	document.getElementById("message").setAttribute("class", "alert alert-success");
+	document.getElementById("endWar").style.display = "block";
+
 }
 
 
