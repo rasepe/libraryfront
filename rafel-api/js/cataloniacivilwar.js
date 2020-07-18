@@ -396,7 +396,7 @@ function play() {
 		thisMessage += 	" " + regions[idLoser-1].name + " has been defeated." ;
 	}
 	if (!finalMovement) {
-		thisMessage += " There are " + countriesLeft + " countries left.";
+		thisMessage += " There are " + countriesLeft + " counties left.";
 	} else {
 		thisMessage += " " + regions[newOwner-1].name + " has won the war.";
 	}
