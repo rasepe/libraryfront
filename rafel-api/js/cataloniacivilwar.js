@@ -259,8 +259,7 @@ var finalMovement = false;
 var movement = [];
 
 var tabla = $('#countries').DataTable({
-	//"lengthMenu" : [ 5, 10, 25, 50, 75, 100 ],
-	//"lengthMenu" : [ -1 ],
+
 	"lengthMenu" : [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
 	"order": [[ 1, 'desc' ]],
 	responsive : true,
@@ -296,12 +295,7 @@ function startNewWar() {
 
 
 function reset() {
-	/*	let messageDiv = document.getElementById("message");
-    messageDiv.setAttribute("class", "alert alert-primary");
-    messageDiv.innerHTML ="Welcome to the Catalan civil war application. A region chosen at random conquers a neighboring region and makes it its own. Until only one can remain. Disclaimer: No person or animal will be injured.";
-    tabla.clear();
-    tabla.draw();
-    startNewWar();*/
+
 	location.reload();
 
 }
@@ -411,7 +405,6 @@ function play() {
 
 
 	if (firstPlay) {
-		// TODO: wargame/new
 		changeColorMessage();
 		firstPlay = false;
 	}
