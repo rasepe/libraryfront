@@ -6,35 +6,47 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="js/dicegame.js"></script>
+	<!-- Dicegame -->
+	<link rel="stylesheet" href="css/dicegame.css">
+	<link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="img/favicon.ico" type="image/x-icon">
 </head>
 
 <body onload="welcome3()">
+	<div class="background-image"></div>
+	<div class="background-image-win"></div>
 	<div class="container">
-		<div class="row justify-content-center mt-5">
-			<div class="col-auto">
-				<p id="welcome3"></p>
+		<div class="row mt-5 capcalera1">
+			<div class="col text-center">
+				<h1 class="dicegamelogo">Dicegame</h1>
 			</div>
 		</div>
-		<div class="row justify-content-center">
+		<div class="row justify-content-center pt-5 capcalera2">
+			<div class="col">
+				<div id="welcome3" class="text-center"></div>
+			</div>
+		</div>
+		<div class="row justify-content-center cos">
 			<div class="col-auto">
 				<input class="btn btn-primary btn-lg" id="submit-button" type="submit" value="Play"
 					onclick="playNewGame()">
 			</div>
 		</div>
-		<div class="row justify-content-center">
+		<div class="row justify-content-center cos pt-3">
 			<div class="col-auto">
 				<p id="result"></p>
 			</div>
 		</div>
-		<div class="row justify-content-center">
+		<!-- Preguntar a Rafel ¿obsolet? -->
+		<div class="row justify-content-center cos">
 			<div class="col-auto">
 				<p id="listShops"></p>
 			</div>
 		</div>
-		<div class="row mt-5">
+		<div class="row pt-5 peu">
 			<div class="col">
 				<p>
-					<a href="index_login.html">BACK TO INDEX</a>
+					<a href="index_login.html">Back to index</a>
 				</p>
 			</div>
 		</div>

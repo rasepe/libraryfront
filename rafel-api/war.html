@@ -72,21 +72,19 @@
             animation-delay: 1s;
         }
         
-        .hidden {
-        	margin-left: 40%;
-        }
-        
-/*         .gameboard {
-        	display: none;
-        }
-        
-        #countryList {
-        	display: none;
-        } */
         
         #endWar {
         	display: none;
+        }
+        
+        #stats {
+        	display: none;
         } 
+        
+        #tableStats {
+        	width: 100% !important;
+        }
+        
     </style>
 </head>
 
@@ -312,12 +310,7 @@
 						stroke-linejoin="round" stroke-opacity=".753" />
                 </svg>
 
- 				<div id="endWar" class="col-12">
-					<!-- <div class="col-12"> -->
-						<input class="btn btn-secondary btn-lg hidden" id="submit-button"
-							type="submit" value="Reset Game" onclick="reset()">
-					<!-- </div> -->
-				</div> 
+ 				
 
 
 			</div>
@@ -342,7 +335,35 @@
 
 
 		</div>
-
+		<div class="row justify-content-center">
+			<div id="endWar" class="col-auto">
+				<!-- <div class="col-12"> -->
+				<input class="btn btn-secondary btn-lg hidden" id="submit-button"
+					type="submit" value="Play Again" onclick="reset()">
+				<!-- </div> -->
+			</div>
+		</div>
+		
+		<div class="row justify-content-center">
+			<div class="text-center my-3 col-12">
+				<input class="btn btn-primary btn-lg" id="submit-button-stats"
+					type="submit" value="See Stats" onclick="stats()">
+			</div>
+		</div>
+		
+		<div class="row justify-content-center">
+			<div id="stats" class="col-auto">
+				<table id="tableStats" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>County</th>
+							<th>% Won Games</th>
+						</tr>
+					</thead>
+					<tbody id='tblcountriesStats'></tbody>
+				</table>
+			</div>
+		</div>
 
 	</div>
 

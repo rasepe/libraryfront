@@ -254,6 +254,8 @@ var formerOwnerId;
 var formerOwner;
 var finalMovement = false;
 
+var idGame;
+
 var movement = [];
 
 var tabla = $('#countries').DataTable({
@@ -271,24 +273,25 @@ var tabla = $('#countries').DataTable({
 	]
 });
 
+
+var tableStats = $('#tableStats').DataTable({
+
+	"lengthMenu" : [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
+	"order": [[ 1, 'desc' ]],
+	responsive : true,
+	"columnDefs" : [ {
+		"data" : "region",
+		"targets" : 0
+	}, {
+		"data" : "successRate",
+		"targets" : 1
+	}
+	]
+});
+
 let firstPlay = true;
 
 
-function startNewWar() {
-
-	document.getElementById("startwar").style.display = "none";
-
-	let showElements = document.querySelectorAll(".gameboard");
-
-	for (let i = 0; i < showElements.length; i++) {
-		showElements[i].style.display = "flex";
-	}
-
-	document.getElementById("countryList").style.display = "block";
-
-	document.getElementById("countries").style.width = "100%";
-
-}
 
 
 
@@ -302,6 +305,24 @@ function reset() {
 
 function play() {
 
+	if (firstPlay) {
+
+		var constructedUrl = "http://rafelserra.mooo.com:8080/wargame/new/";
+		var data = $.parseJSON($.ajax({
+			type: "POST",
+			url: constructedUrl,
+			dataType: "json", 
+			async: false
+		}).responseText); // This will wait until you get a response from the ajax request.
+
+		// Now you can use data.posX, data.posY later in your code and it will work.
+		idGame = data;
+
+		console.log(idGame);
+
+
+
+	}
 
 	//TRIEM A L'ATZAR ID COMARCA CONQUERIDORA
 	conquerorId = Math.floor(Math.random()*regions.length)+1;
@@ -411,6 +432,12 @@ function play() {
 	manage(movement);
 }
 
+
+function printonconsole(data) {
+	console.log(data);
+	console.log("Hola");
+}
+
 function changeColorMessage() {
 	let messageDiv = document.getElementById("message");
 	messageDiv.setAttribute("class", "alert alert-warning");
@@ -458,7 +485,7 @@ function manage(data) {
 	tabla.draw();
 
 	if (finalMovement) {
-		endGame(conquerorId);
+		endGame(conquerorId, idGame);
 	}
 
 }
@@ -500,11 +527,83 @@ function paintTheOriginalColorRegions() {
 	}
 }
 
-function endGame(conquerorId) {
+function endGame(conquerorId, idGame) {
+
+
+
+	var constructedUrl = "http://rafelserra.mooo.com:8080/wargame/winner/" + idGame + "/" + conquerorId;
+
+
+	$.ajax({
+		type: "POST",
+		url: constructedUrl,
+		success: function(data) {
+
+
+			console.log("winner sent");
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+
 	document.getElementById("countryList").style.display = "none";
 	document.getElementById("message").setAttribute("class", "alert alert-success");
 	document.getElementById("endWar").style.display = "block";
 
 }
 
+function stats(){
+	document.getElementById("stats").style.display = "block";
+	document.getElementById("submit-button-stats").outerHTML = "<input class='btn btn-secondary btn-lg' id='submit-button-hide-stats' type='submit' value='Hide Stats' onclick='hideStats()'>"
 
+
+		var constructedUrl = "http://rafelserra.mooo.com:8080/wargame/stats";
+
+
+	$.ajax({
+		type: "GET",
+		url: constructedUrl,
+		success: function(data) {
+
+
+			console.log(data[0]);
+
+			tableStats.clear();
+
+			for (var i=0; i<data.length; i++) {
+
+
+				console.log(data[i].name);
+				console.log(data[i].successRate);
+
+				tableStats.row.add({
+
+					"region" 	: data[i].name,
+					"successRate" : data[i].successRate
+
+				});	
+
+
+			}
+
+			tableStats.draw();
+
+
+		},
+		error: function(){
+			alert("json not found");
+		}
+	});
+
+
+}
+
+function hideStats() {
+	document.getElementById("stats").style.display = "none";
+	document.getElementById("submit-button-hide-stats").outerHTML = "<input class='btn btn-primary btn-lg' id='submit-button-stats' type='submit' value='Show Stats' onclick='stats()'>"
+
+
+}

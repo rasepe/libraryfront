@@ -16,43 +16,19 @@
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+	<!-- Dicegame -->
+	<link rel="stylesheet" type="text/css" href="css/dicegame.css">
+
 	<script src="js/welcome.js"></script>
-	<style>
-		.capcalera1 {
-			background-color: #F6BEEC;
-			border-radius: 25px 25px 0 0;
-		}
 
-		.capcalera1 h1 {
-			color: white;
-		}
-
-		.capcalera2,
-		.cos {
-			background-color: #F6BEEC;
-			border-radius: 0 0;
-		}
-
-		.cos {
-			text-align: center;
-		}
-
-		.peu,
-		.info-global-options {
-			background-color: #CBA8C5;
-		}
-
-		.peu {
-			border-radius: 0 0 25px 25px;
-		}
-	</style>
 </head>
 
 <body onload="welcome2()">
+	<div class="background-image"></div>
 	<div class="container">
 		<div class="row mt-5 capcalera1">
 			<div class="col text-center">
-				<h1>Dicegame</h1>
+				<h1 class="dicegamelogo">Dicegame</h1>
 			</div>
 		</div>
 		<div class="row capcalera2">
@@ -77,46 +53,46 @@
 		</div>
 		<div class="row py-3 justify-content-center info-global-options">
 			<!-- Mario: No puc millorar el average number amb aquesta estructura (per exemple color o més gran) -->
-			<p id="showList" style="font-size: larger;"> 
-				<div id="playersList" class="col-auto" style="display: none;">
-					<table id="players" class="table table-striped table-bordered">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Player</th>
-								<th>Success Rate</th>
-								<th>Created at</th>
-								<th>Has games?</th>
-							</tr>
-						</thead>
-						<tbody id='tblplayers'></tbody>
-					</table>
-				</div>
-				<div id='gamesList' class="col-auto" style="display: none;">
-					<table id='games' class='table table-striped table-bordered'>
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Dice 1</th>
-								<th>Dice 2</th>
-								<th>Has won?</th>
-								<th>Created at</th>
-							</tr>
-						</thead>
-						<tbody id='tblgames'></tbody>
-					</table>
-				</div>
+			<p id="showList" style="font-size: larger;">
+			<div id="playersList" class="col-auto" style="display: none;">
+				<table id="players" class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Player</th>
+							<th>Success Rate</th>
+							<th>Created at</th>
+							<th>Has games?</th>
+						</tr>
+					</thead>
+					<tbody id='tblplayers'></tbody>
+				</table>
+			</div>
+			<div id='gamesList' class="col-auto" style="display: none;">
+				<table id='games' class='table table-striped table-bordered'>
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Dice 1</th>
+							<th>Dice 2</th>
+							<th>Has won?</th>
+							<th>Created at</th>
+						</tr>
+					</thead>
+					<tbody id='tblgames'></tbody>
+				</table>
+			</div>
 			</p>
 		</div>
 		<div class="row peu">
 			<div class="col py-3">
-					Global options:
-					<button type="button" class="btn btn-primary btn-sm" onclick="seeAllPlayers()">See all
-						players</button>
-					<button type="button" class="btn btn-primary btn-sm" onclick="seeAverage()">See global
-						average</button>
-					<button type="button" class="btn btn-primary btn-sm" onclick="seeLoser()">See loser</button>
-					<button type="button" class="btn btn-primary btn-sm" onclick="seeWinner()">See winner</button>
+				Global options:
+				<button type="button" class="btn btn-primary btn-sm" onclick="seeAllPlayers()">See all
+					players</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="seeAverage()">See global
+					average</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="seeLoser()">See loser</button>
+				<button type="button" class="btn btn-primary btn-sm" onclick="seeWinner()">See winner</button>
 			</div>
 		</div>
 
